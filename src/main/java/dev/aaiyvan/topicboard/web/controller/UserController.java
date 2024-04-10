@@ -25,6 +25,7 @@ public class UserController {
 
     private final UserService userService;
     private final MessageService messageService;
+    private final TopicService topicService;
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
@@ -45,13 +46,6 @@ public class UserController {
         return ResponseEntity.ok(userService.save(userRequest));
     }
 
-//    @GetMapping("/{topicId}/messages")
-//    public ResponseEntity<List<MessageResponse>> getAllMessagesByTopicId (
-//            final @PathVariable UUID topicId
-//    ) {
-//        return ResponseEntity.ok(topicService.getAllByTopicId(topicId));
-//    }
-
     @GetMapping("/info/{id}")
     public ResponseEntity<UserResponse> getInfoUser (
             final @PathVariable UUID id
@@ -59,36 +53,19 @@ public class UserController {
         return ResponseEntity.ok(userService.getInfo(id));
     }
 
-//    @PostMapping("/{userId}/topics/create")
-//    public ResponseEntity<TopicResponse> createTopicByUserId (
-//            final @Valid @RequestBody TopicRequest topicRequest,
-//            final @PathVariable UUID userId
-//    ) {
-//        return ResponseEntity.ok(topicService.create(userId, topicRequest));
-//    }
-
-    @PostMapping("/{userId}/messages/create")
-    public ResponseEntity<MessageResponse> createMessageByUserId (
-            final @Valid @RequestBody MessageRequest messageRequest,
-            final @PathVariable UUID userId
+    @PostMapping("/topic/create")
+    public ResponseEntity<TopicResponse> createTopic (
+            @RequestBody @Valid final TopicRequest topicRequest
     ) {
-        return ResponseEntity.ok(messageService.createMessageByUserId(userId, messageRequest));
+        return ResponseEntity.ok(topicService.createTopic(topicRequest));
     }
 
-    @PutMapping("/{userId}/messages/update")
-    public ResponseEntity<MessageResponse> updateMessageByUserId (
-            final @Valid @RequestBody MessageRequest messageRequest,
-            final @PathVariable UUID userId
-    ) {
-        return ResponseEntity.ok(messageService.update(userId, messageRequest));
-    }
-
-    @PutMapping("/update/{id}")
+    @PutMapping("/update/{userId}")
     public ResponseEntity<UserResponse> updateUser (
             final @RequestBody UserRequest userRequest,
-            final @PathVariable UUID id
+            final @PathVariable UUID userId
     ) {
-        return ResponseEntity.ok(userService.update(userRequest, id));
+        return ResponseEntity.ok(userService.update(userRequest, userId));
     }
 
     @DeleteMapping("/delete/{id}")

@@ -31,55 +31,10 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public MessageResponse createMessageByUserId (
-            final UUID userId,
-            final MessageRequest messageRequest
+    public void deleteMessage(
+            final UUID messageId
     ) {
-        return null;
-    }
-
-    @Override
-    public MessageResponse update (
-            final UUID userId,
-            final MessageRequest messageRequest
-    ) {
-        return null;
-    }
-
-    @Override
-    public List<MessageResponse> getAllMessages() {
-        return messageMapper.toResponse(messageRepository.findAll());
-    }
-
-    @Override
-    public MessageResponse createMessage(
-            final MessageRequest messageRequest
-    ) {
-        Message message = messageMapper.toMessage(messageRequest);
-
-        if (message == null) {
-            throw new InvalidArgumentException("Message cannot be null");
-        }
-
-        log.info("Saving message with id: {}", message.getId());
-        messageRepository.save(message);
-
-        return messageMapper.toResponse(message);
-    }
-
-    @Override
-    public MessageResponse getInfo (
-            final UUID id
-    ) {
-        return messageMapper.toResponse(get(id));
-    }
-
-    @Override
-    public Message get (
-            final UUID id
-    ) {
-        return messageRepository.findById(id)
-                .orElseThrow(MessageNotFoundException::new);
+        messageRepository.deleteById(messageId);
     }
 
 }

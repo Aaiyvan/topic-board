@@ -1,8 +1,10 @@
 package dev.aaiyvan.topicboard.domain.model.message;
 
+import dev.aaiyvan.topicboard.domain.model.topic.Topic;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -30,6 +32,7 @@ public class Message implements Serializable {
     @Column(name = "c_text")
     String text;
 
+    @CreationTimestamp
     @Column(name = "c_creation_date")
     LocalDateTime creationDate;
 

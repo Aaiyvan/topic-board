@@ -12,11 +12,20 @@ public interface MessageRepository extends JpaRepository<Message, UUID> {
 
     @Query(value = """
             SELECT * FROM t_messages m
-            JOIN users_messages um ON um.message_id = m.id
-            WHERE um.c_user_id = :userId
+            JOIN t_users_messages um ON um.message_id = m.id
+            WHERE um.user_id = :userId
             """, nativeQuery = true)
     List<Message> findAllByUserId(
             @Param("userId") UUID userId
+    );
+
+    @Query(value = """
+            SELECT * FROM t_messages m
+            JOIN t_topics_messages tm ON tm.message_id = m.id
+            WHERE tm.topic_id = :topicId
+            """, nativeQuery = true)
+    List<Message> findAllMessagesByTopicId(
+            @Param("topicId") UUID topicId
     );
 
 }

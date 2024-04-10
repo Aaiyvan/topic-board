@@ -9,19 +9,7 @@ import java.util.UUID;
 
 public interface MessageService {
 
-
     List<MessageResponse> getAllByUserId(UUID userId);
 
-    MessageResponse createMessageByUserId(UUID userId, MessageRequest messageRequest);
-
-    MessageResponse update(UUID userId, MessageRequest messageRequest);
-
-    List<MessageResponse> getAllMessages();
-
-    MessageResponse createMessage(MessageRequest messageRequest);
-
-    MessageResponse getInfo(UUID id);
-
-    Message get(UUID id);
-
+    void deleteMessage(UUID messageId);
 }

@@ -27,12 +27,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.mapstruct:mapstruct:${property("mapstructVersion")}")
-    annotationProcessor("org.mapstruct:mapstruct-processor:${property("mapstructVersion")}")
     implementation("org.liquibase:liquibase-core")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.projectlombok:lombok")
+    implementation("org.mapstruct:mapstruct:${property("mapstructVersion")}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${property("mapstructVersion")}")
 }
 
 tasks.withType<Test> {

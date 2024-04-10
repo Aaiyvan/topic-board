@@ -14,30 +14,17 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/messages")
+@RequestMapping("/message")
 @RequiredArgsConstructor
 public class MessageController {
 
     private final MessageService messageService;
 
-    @GetMapping
-    public ResponseEntity<List<MessageResponse>> getAllMessages()
-    {
-        return ResponseEntity.ok(messageService.getAllMessages());
-    }
-
-    @GetMapping("/info/{id}")
-    public ResponseEntity<MessageResponse> getInfoMessage (
-            final @PathVariable UUID id
-    ) {
-        return ResponseEntity.ok(messageService.getInfo(id));
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<MessageResponse> createMessage (
-            final @RequestBody @Valid MessageRequest messageRequest
-    ) {
-        return ResponseEntity.ok(messageService.createMessage(messageRequest));
+    @DeleteMapping("/{messageId}")
+    public void deleteMessage(
+            @PathVariable final UUID messageId
+    ){
+        messageService.deleteMessage(messageId);
     }
 
 
