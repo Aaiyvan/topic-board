@@ -1,16 +1,10 @@
 package dev.aaiyvan.topicboard.web.controller;
 
-import dev.aaiyvan.topicboard.domain.model.user.User;
 import dev.aaiyvan.topicboard.service.message.MessageService;
-import dev.aaiyvan.topicboard.service.topic.TopicService;
 import dev.aaiyvan.topicboard.service.user.UserService;
-import dev.aaiyvan.topicboard.web.dto.message.MessageRequest;
 import dev.aaiyvan.topicboard.web.dto.message.MessageResponse;
-import dev.aaiyvan.topicboard.web.dto.topic.TopicRequest;
-import dev.aaiyvan.topicboard.web.dto.topic.TopicResponse;
 import dev.aaiyvan.topicboard.web.dto.user.UserRequest;
 import dev.aaiyvan.topicboard.web.dto.user.UserResponse;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +12,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
