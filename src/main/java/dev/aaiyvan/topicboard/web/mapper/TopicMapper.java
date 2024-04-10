@@ -20,6 +20,4 @@ public interface TopicMapper {
 
     TopicResponse toResponse(Topic topic);
 
-    List<TopicResponse> toResponse(List<Topic> topics);
-
 }

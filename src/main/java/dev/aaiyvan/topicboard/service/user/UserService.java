@@ -3,13 +3,13 @@ package dev.aaiyvan.topicboard.service.user;
 import dev.aaiyvan.topicboard.domain.model.user.User;
 import dev.aaiyvan.topicboard.web.dto.user.UserRequest;
 import dev.aaiyvan.topicboard.web.dto.user.UserResponse;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
 
-    List<UserResponse> getAll();
 
     UserResponse getInfo(UUID id);
 
@@ -24,5 +24,7 @@ public interface UserService {
     boolean existsByUsername(String username);
 
     UserResponse createUser(UserRequest userRequest);
+
+    Page<UserResponse> getAll(Integer offset, Integer limit);
 
 }

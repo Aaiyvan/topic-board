@@ -7,6 +7,7 @@ import dev.aaiyvan.topicboard.web.dto.message.MessageUpdateRequest;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicRequest;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicResponse;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicUpdateRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -16,13 +17,13 @@ public interface TopicService {
 
     TopicResponse createTopic(TopicRequest topicRequest);
 
-    List<TopicResponse> getAllTopics();
+    Page<TopicResponse> getAllTopics(Integer offset, Integer limit);
 
     Topic get(UUID topicId);
 
     TopicResponse createMessage(MessageRequest messageRequest, UUID topicId);
 
-    List<MessageResponse> getAllMessagesByTopicId(UUID topicId);
+    Page<MessageResponse> getAllMessagesByTopicId(UUID topicId, Integer offset, Integer limit);
 
     void deleteTopic(UUID topicId);
 

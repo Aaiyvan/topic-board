@@ -16,8 +16,12 @@ import dev.aaiyvan.topicboard.web.dto.topic.TopicResponse;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicUpdateRequest;
 import dev.aaiyvan.topicboard.web.mapper.MessageMapper;
 import dev.aaiyvan.topicboard.web.mapper.TopicMapper;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,10 +61,14 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<MessageResponse> getAllMessagesByTopicId(
-            final UUID topicId
+    public Page<MessageResponse> getAllMessagesByTopicId(
+            final UUID topicId,
+            @Min(0) final Integer offset,
+            @Min(1) @Max(100) final Integer limit
     ) {
-        return messageMapper.toResponse(messageRepository.findAllMessagesByTopicId(topicId));
+        return messageRepository
+                .findAllMessagesByTopicId(topicId, PageRequest.of(offset, limit))
+                .map(messageMapper::toResponse);
     }
 
     @Override
@@ -104,8 +112,13 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public List<TopicResponse> getAllTopics() {
-        return topicMapper.toResponse(topicRepository.findAll());
+    public Page<TopicResponse> getAllTopics(
+            @Min(0) Integer offset,
+            @Min(1) @Max(100) Integer limit
+    ) {
+        return topicRepository
+                .findAll(PageRequest.of(offset, limit))
+                .map(topicMapper::toResponse);
     }
 
     @Override

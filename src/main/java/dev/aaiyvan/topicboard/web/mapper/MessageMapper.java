@@ -22,6 +22,4 @@ public interface MessageMapper {
 
     MessageResponse toResponse(Message message);
 
-    List<MessageResponse> toResponse(List<Message> messages);
-
 }
