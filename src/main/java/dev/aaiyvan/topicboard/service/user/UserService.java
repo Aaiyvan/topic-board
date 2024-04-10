@@ -15,10 +15,14 @@ public interface UserService {
 
     User get(UUID id);
 
-    UserResponse save(UserRequest userRequest);
-
     UserResponse update(UserRequest userRequest, UUID id);
 
     void delete(UUID id);
+
+    User getByUsername(String username);
+
+    boolean existsByUsername(String username);
+
+    UserResponse createUser(UserRequest userRequest);
 
 }

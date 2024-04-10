@@ -45,22 +45,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse save(
-            UserRequest userRequest
-    ) {
-        User user = userMapper.toUser(userRequest);
-
-        if (user == null) {
-            throw new InvalidArgumentException("User cannot be null");
-        }
-
-        log.info("Saving user with id: {}", user.getId());
-        userRepository.save(user);
-
-        return userMapper.toResponse(user);
-    }
-
-    @Override
     @Transactional
     public UserResponse update(
             final UserRequest userRequest,
@@ -81,6 +65,37 @@ public class UserServiceImpl implements UserService {
             final UUID id
     ) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User getByUsername(
+            final String username
+    ) {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean existsByUsername(
+            final String username
+    ) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public UserResponse createUser(
+            final UserRequest userRequest
+    ) {
+        User user = userMapper.toUser(userRequest);
+
+        if (user == null) {
+            throw new InvalidArgumentException("User cannot be null");
+        }
+
+        userRepository.save(user);
+        log.info("Saving user with id: {}", user.getId());
+
+        return userMapper.toResponse(user);
+
     }
 
 }

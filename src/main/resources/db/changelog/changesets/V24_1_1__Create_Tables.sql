@@ -3,7 +3,6 @@ create table if not exists t_users
     id         UUID primary key,
     c_name     varchar(255) not null,
     c_username varchar(255) not null unique,
-    c_email    varchar(255) not null unique,
     c_password varchar(255) not null
 );
 
@@ -46,6 +45,7 @@ create table if not exists t_users_roles
     primary key (user_id, c_role),
     constraint fk_users_roles_users foreign key (user_id) references t_users (id) on delete cascade on update no action
 );
+
 
 
 

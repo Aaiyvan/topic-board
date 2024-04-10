@@ -39,13 +39,6 @@ public class UserController {
         return ResponseEntity.ok(messageService.getAllByUserId(userId));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<UserResponse> createUser(
-            final @RequestBody @Valid UserRequest userRequest
-    ) {
-        return ResponseEntity.ok(userService.save(userRequest));
-    }
-
     @GetMapping("/info/{id}")
     public ResponseEntity<UserResponse> getInfoUser (
             final @PathVariable UUID id
