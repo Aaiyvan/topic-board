@@ -1,5 +1,7 @@
 [![MasterHead](https://i.pinimg.com/originals/ec/ec/36/ecec3687a972a20d8ba953b7f1bf4e43.gif)]()
 <h1 align="center">Topic Board project for GreenAtom</h1>
+
+<p align="center">This is a test Java project designed to create and manage topics and messages.</p>
 <h2>Running the Project</h2>
 To run the project, you will need Docker Compose. Simply run the following command:                                                
 docker-compose up
