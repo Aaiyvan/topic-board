@@ -2,19 +2,18 @@ spring:
   config:
     import: optional:file:.env[.properties]
   datasource:
-    url: jdbc:postgresql://localhost:5435/topic-board?stringtype=unspecified
-    username: topic-board
-    password: topic-board
+    url: jdbc:postgresql://${HOST}/${POSTGRES_DB}?stringtype=unspecified
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.yaml
     enabled: true
 server:
   port: 8085
-
 security:
   jwt:
-    secret: enhnaGNmamJ4d2JhYmV3YmhjZWJqaGVzcnZrcnNlaGNyYmx3aGJjcmhiY2tzaGJjd2JocmVsYmFjcmhiZWthY2hy
-    access: 10m
-    refresh: 1h
+    secret: ${JWT_SECRET}
+    access: ${JWT_ACCESS_DURATION}
+    refresh: ${JWT_REFRESH_DURATION}
 

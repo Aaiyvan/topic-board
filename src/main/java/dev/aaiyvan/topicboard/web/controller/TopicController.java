@@ -7,20 +7,25 @@ import dev.aaiyvan.topicboard.web.dto.message.MessageUpdateRequest;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicRequest;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicResponse;
 import dev.aaiyvan.topicboard.web.dto.topic.TopicUpdateRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/topic")
 @RequiredArgsConstructor
+@Tag(
+        name = "Topic Controller",
+        description = "Topic API"
+)
 public class TopicController {
 
     private final TopicService topicService;
@@ -67,6 +72,7 @@ public class TopicController {
 
 
     @PutMapping("/{topicId}/message")
+    @PreAuthorize("@cse.canAccessMessage(#messageUpdateRequest.messageId)")
     public ResponseEntity<TopicResponse> updateMessageInTopic(
             @RequestBody @Valid MessageUpdateRequest messageUpdateRequest,
             @PathVariable UUID topicId

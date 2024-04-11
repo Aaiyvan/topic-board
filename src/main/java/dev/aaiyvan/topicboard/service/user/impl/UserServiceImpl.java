@@ -38,6 +38,14 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toResponse);
     }
 
+    @Override
+    public boolean isMessageOwner(
+            final UUID id,
+            final UUID messageId
+    ) {
+        return userRepository.isMessageOwner(id, messageId);
+    }
+
 
     @Override
     public UserResponse getInfo(
@@ -81,7 +89,8 @@ public class UserServiceImpl implements UserService {
     public User getByUsername(
             final String username
     ) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Override

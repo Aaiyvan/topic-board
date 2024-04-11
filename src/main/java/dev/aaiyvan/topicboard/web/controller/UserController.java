@@ -5,11 +5,13 @@ import dev.aaiyvan.topicboard.service.user.UserService;
 import dev.aaiyvan.topicboard.web.dto.message.MessageResponse;
 import dev.aaiyvan.topicboard.web.dto.user.UserRequest;
 import dev.aaiyvan.topicboard.web.dto.user.UserResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,6 +19,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Tag(
+        name = "User Controller",
+        description = "Client API"
+)
 public class UserController {
 
     private final UserService userService;
@@ -39,27 +45,29 @@ public class UserController {
         return ResponseEntity.ok(messageService.getAllByUserId(userId, offset, limit));
     }
 
-    @GetMapping("/info/{id}")
+    @GetMapping("/info/{userId}")
     public ResponseEntity<UserResponse> getInfoUser (
-            final @PathVariable UUID id
+            final @PathVariable UUID userId
     ) {
-        return ResponseEntity.ok(userService.getInfo(id));
+        return ResponseEntity.ok(userService.getInfo(userId));
     }
 
-    @PutMapping("/update/{userId}")
+    @PutMapping("/{userId}")
+    @PreAuthorize("@cse.canAccessUser(#userId)")
     public ResponseEntity<UserResponse> updateUser (
-            final @RequestBody UserRequest userRequest,
-            final @PathVariable UUID userId
+            @RequestBody final UserRequest userRequest,
+            @PathVariable final UUID userId
     ) {
         return ResponseEntity.ok(userService.update(userRequest, userId));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{userId}")
+    @PreAuthorize("@cse.canAccessUser(#userId)")
     public ResponseEntity<String> deleteUser (
-            final @PathVariable UUID id
+            final @PathVariable UUID userId
     ) {
-        userService.delete(id);
-        return ResponseEntity.ok("User with id: " + id + " was deleted");
+        userService.delete(userId);
+        return ResponseEntity.ok("User with id: " + userId + " was deleted.");
     }
 
 

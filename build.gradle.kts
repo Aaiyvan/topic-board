@@ -22,14 +22,17 @@ repositories {
 }
 
 extra["mapstructVersion"] = "1.5.5.Final"
+extra["swaggerVersion"] = "2.2.0"
+extra["jwtVersion"] = "0.2.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.springframework.boot:spring-boot-configuration-processor:3.2.4")
+    implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-security:3.2.4")
-    implementation("io.github.ilyalisov:jwt:0.2.0")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${property("swaggerVersion")}")
+    implementation("io.github.ilyalisov:jwt:${property("jwtVersion")}")
     implementation("org.liquibase:liquibase-core")
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("org.postgresql:postgresql")

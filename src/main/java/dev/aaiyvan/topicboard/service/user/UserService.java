@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public interface UserService {
 
-
     UserResponse getInfo(UUID id);
 
     User get(UUID id);
@@ -26,5 +25,7 @@ public interface UserService {
     UserResponse createUser(UserRequest userRequest);
 
     Page<UserResponse> getAll(Integer offset, Integer limit);
+
+    boolean isMessageOwner(UUID userId, UUID messageId);
 
 }

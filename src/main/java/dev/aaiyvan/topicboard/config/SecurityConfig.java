@@ -28,6 +28,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private static final String[] WHITE_LIST_URL = {
+            "/auth/**",
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui/index.html"
+    };
+
     private final JwtProperties jwtProperties;
     private final UserDetailsService userDetailsService;
 
@@ -75,16 +82,16 @@ public class SecurityConfig {
                                                     .write("Unauthorized.");
                                         })
                                 .accessDeniedHandler(
-                                        (request, response, exception) -> {
-                                            response.setStatus(
-                                                    HttpStatus.FORBIDDEN
-                                                            .value()
-                                            );
-                                            response.getWriter()
-                                                    .write("Forbidden.");
-                                        }))
+                        (request, response, exception) -> {
+                            response.setStatus(
+                                    HttpStatus.FORBIDDEN
+                                            .value()
+                            );
+                            response.getWriter()
+                                    .write("Unauthorized.");
+                        }))
                 .authorizeHttpRequests(configurer ->
-                        configurer.requestMatchers("/auth/**")
+                        configurer.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())

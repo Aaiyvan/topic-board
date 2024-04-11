@@ -3,10 +3,13 @@ package dev.aaiyvan.topicboard.service.topic.impl;
 import dev.aaiyvan.topicboard.domain.exception.InvalidArgumentException;
 import dev.aaiyvan.topicboard.domain.exception.MessageNotFoundException;
 import dev.aaiyvan.topicboard.domain.exception.TopicNotFoundException;
+import dev.aaiyvan.topicboard.domain.exception.UserNotFoundException;
 import dev.aaiyvan.topicboard.domain.model.message.Message;
 import dev.aaiyvan.topicboard.domain.model.topic.Topic;
+import dev.aaiyvan.topicboard.domain.model.user.User;
 import dev.aaiyvan.topicboard.repository.MessageRepository;
 import dev.aaiyvan.topicboard.repository.TopicRepository;
+import dev.aaiyvan.topicboard.repository.UserRepository;
 import dev.aaiyvan.topicboard.service.topic.TopicService;
 import dev.aaiyvan.topicboard.web.dto.message.MessageRequest;
 import dev.aaiyvan.topicboard.web.dto.message.MessageResponse;
@@ -36,6 +39,7 @@ public class TopicServiceImpl implements TopicService {
     private final TopicMapper topicMapper;
     private final MessageMapper messageMapper;
     private final MessageRepository messageRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Topic get(
@@ -53,6 +57,10 @@ public class TopicServiceImpl implements TopicService {
         Topic existingTopic = get(topicId);
         Message message = messageMapper.toMessage(messageRequest);
         existingTopic.getMessages().add(message);
+
+        User author = userRepository.findByUsername(messageRequest.getAuthorName())
+                .orElseThrow(UserNotFoundException::new);
+        author.getMessages().add(message);
 
         messageRepository.save(message);
         log.info("Saving message with id: {}", message.getId());
