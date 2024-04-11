@@ -25,7 +25,7 @@ The configuration files can be found in the src/main/resources/db/changelog dire
 
 <h6>API Documentation</h6>
 
-API documentation is available using Swagger. Once the application is running, you can access the documentation at http://localhost:8080/swagger-ui.html.
+API documentation is available using Swagger. Once the application is running, you can access the documentation at http://localhost:8085/swagger-ui.html.
 
 <h6>Additional Notes</h6>
 
